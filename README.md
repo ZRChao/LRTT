@@ -39,7 +39,7 @@ load(throat.otu.tab)
 load(throat.tree)
 load(throat.meta)
 
-p = ncol(throat.otu.tab)
+p <- ncol(throat.otu.tab)
 throat.taxa.index <- Taxa.index(p, throat.tree)
 throat.alltab <- cbind(throat.taxa.index*throat.otu.tab,  throat.otu.tab)
 group <- throat.meta$SmokingState)
