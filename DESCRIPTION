@@ -1,0 +1,15 @@
+Package: LRTT
+Type: Package
+Title: Differential Abundance Analysis for Microbiome data incorpating
+        phylogeney
+Version: 0.1.0
+Author: Chao ZHOU and Tao WANG
+Maintainer: Chao ZHOU<Supdream8@sjtu.edu.cn>
+Description: Use the log ratio transform to do differential abundance analysis for microbiome based on the tree structure.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.2.0)
+Import: ape, dirmult, mvtnorm, MiSPU
+NeedsCompilation: no
+Packaged: 2018-03-27 06:49:13 UTC; zhouchao

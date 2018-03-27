@@ -1,0 +1,4 @@
+exportPattern("^[[:alpha:]]+")
+#importFrom(dirmult, simPop)
+#importFrom(mvtnorm, rmvnorm)
+#importFrom(ape, plot.phylo)
