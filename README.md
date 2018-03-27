@@ -1,11 +1,11 @@
-## Tree.Ratio
+## Log Raio Tree Test
 Differential Abundance Analysis for Microbiome data Incorporating Phylogeny. We call this methods *LRTT*（ Log Ratio Tree Test）.
 
 ## Installation
 
 ```R
 # Install the development version from GitHub
-devtools::install_github("ZRChao/LTRR")
+devtools::install_github("ZRChao/LRTT")
 ```
 ## Contents
 
