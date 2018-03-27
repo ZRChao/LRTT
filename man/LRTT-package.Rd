@@ -11,7 +11,7 @@ tree structure. The package here provides four data simulation function include 
     The complete list of functions can be displayed with library(help = LRTT).
 
     More information on LRTT can be found :
-    \url{https://github.com/ZRChao/Tree.Ratio}
+    \url{https://github.com/ZRChao/LRTT}
 }
 
 \details{
