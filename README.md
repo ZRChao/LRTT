@@ -10,21 +10,21 @@ devtools::install_github("ZRChao/LRTT")
 ## Contents
 
 ### Simulation
-* BIT.Sim.R for Multinomial(Binomial) Tree distribution
-* DTM.Sim.R for Dirichlet Multinomial Tree distribution
-* LNM.Sim.R for Logistical Normal Multinomial distribution 
-* ANCOM.Sim.R for Poission distribution (parameters set follow as ANCOM paper)
+* `BIT.Sim.R` for Multinomial(Binomial) Tree distribution
+* `DTM.Sim.R` for Dirichlet Multinomial Tree distribution
+* `LNM.Sim.R` for Logistical Normal Multinomial distribution 
+* `ANCOM.Sim.R` for Poission distribution (parameters set follow as ANCOM paper)
 
 ### Tree relate function
-* Tree.Sim.R : Tree simulation
-* Taxa.index.R : relationship between leafs and internal nodes
-* Prob.mult.R :calculate the probability of each leafs by multiple each probability along the branch
-* Tree.ratio.R : Tree ratio test based on the tree structure
-* Tree.ratio.back.R: Correct steps of the tree ratio test.
+* `Tree.Sim.R` : Tree simulation
+* `Taxa.index.R` : relationship between leafs and internal nodes
+* `Prob.mult.R` :calculate the probability of each leafs by multiple each probability along the branch
+* `Tree.ratio.R` : Tree ratio test based on the tree structure
+* `Tree.ratio.back.R`: Correct steps of the tree ratio test.
 
 ### Other function
-* pow.fdr.R : calculate power and fdr with p.value 
-* Zig.pv.adj.R : metagenomeSeq::fitFeature
+* `pow.fdr.R` : calculate power and fdr with p.value 
+* `Zig.pv.adj.R` : metagenomeSeq::fitFeature
 *
 
 ### Require 
