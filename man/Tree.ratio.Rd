@@ -29,16 +29,20 @@ Tree ratio test based on the tree.
 }
 \examples{
 library(MiSPU)
-load(throat.otu.tab)
-load(throat.tree)
-load(throat.meta)
-p = ncol(throat.otu.tab)
+data(throat.otu.tab)
+data(throat.tree)
+data(throat.meta)
 
-throat.taxa.index <- Taxa.index(p, throat.tree)
+p <- ncol(throat.otu.tab)
+# throat.taxa.index <- Taxa.index(p, throat.tree)
+data(throat.taxa.index )
+colnames(throat.otu.tab) <- as.character(1:p)
+
 throat.alltab <- cbind(throat.taxa.index*throat.otu.tab,  throat.otu.tab)
+group <- throat.meta$SmokingStatus
 
-group <- throat.meta$SmokingState
-result <- Tree.Ratio(p, throat.tree, throat.taxa.index, throat.alltab, group)
+result <- Tree.ratio(p, throat.tree, throat.taxa.index, throat.alltab, group)
 
-detected <- Tree.Ratio(p, tree.ratio = result, taxa.index = throat.taxa.index, otutab = throat.otu.tab, group)
+throat.detected <- Tree.ratio.back(p, throat.tree, throat.taxa.index, results, group)
+
 }
