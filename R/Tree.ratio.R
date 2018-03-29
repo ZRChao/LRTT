@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------#####
 
 
-Tree.ratio = function(p, tree, taxa.index, all.tab, group = c(1:(2*N))){
+Tree.ratio = function(p, tree, taxa.index, all.tab, group){
   result <- list()
   taxa_pv <- rep(0, ncol(taxa.index))
   names(taxa_pv) < names(sort(colSums(taxa.index)))
