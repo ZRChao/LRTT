@@ -16,7 +16,7 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group){
   otu_dif <- rep(F, p)
   names(otu_dif) <- as.character(1:p)
   taxa_leafs <- unique(sort(colSums(taxa.index)))
-  label <- unqiue(group)[1]
+  label <- unique(group)[1]
   
   taxa.dif <- c()
   n = 0
