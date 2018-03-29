@@ -35,9 +35,9 @@ devtools::install_github("ZRChao/LRTT")
 #You can see this in real data application of throat.R 
 ```R
 library(MiSPU)
-load(throat.otu.tab)
-load(throat.tree)
-load(throat.meta)
+data(throat.otu.tab)
+data(throat.tree)
+data(throat.meta)
 
 p <- ncol(throat.otu.tab)
 throat.taxa.index <- Taxa.index(p, throat.tree)
