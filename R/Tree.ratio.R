@@ -16,7 +16,8 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group = c(1:(2*N))){
   otu_dif <- rep(F, p)
   names(otu_dif) <- as.character(1:p)
   taxa_leafs <- unique(sort(colSums(taxa.index)))
-
+  label <- unqiue(group)[1]
+  
   taxa.dif <- c()
   n = 0
   for(t in taxa_leafs){
@@ -31,7 +32,7 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group = c(1:(2*N))){
 
       ratio = log(child1 + 1e-20) - log(child2 + 1e-20)
       taxa_pv[n] <- pv <- ifelse(length(unique(ratio)) == 1, 1,
-                                 t.test(ratio[group==1], ratio[group==2])$p.value)
+                                 t.test(ratio[group==label], ratio[group!=label])$p.value)
 
       if(pv <= 0.05/length(taxa_names)){
         #temp = all_table[, colnames(all_table) == parent]
