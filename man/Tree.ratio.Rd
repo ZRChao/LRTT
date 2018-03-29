@@ -37,7 +37,7 @@ p <- ncol(throat.otu.tab)
 # throat.taxa.index <- Taxa.index(p, throat.tree)
 data(throat.taxa.index )
 colnames(throat.otu.tab) <- as.character(1:p)
-throat.taxa.tab <- throat.otu.tab %*% throat.taxa.index
+throat.taxa.tab <- throat.otu.tab \%*\% throat.taxa.index
   
 throat.alltab <- cbind(throat.taxa.tab,  throat.otu.tab)
 group <- throat.meta$SmokingStatus
