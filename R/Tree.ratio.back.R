@@ -1,6 +1,7 @@
 Tree.ratio.back = function(p, tree.ratio, taxa.index, otutab, group=c(1:(2*N))){
-
+  label <- unique(group)[1]
   difset <- which(tree.ratio$otu.dif == T)
+  
   if(length(difset) == 0){
     difset.detected <- NULL
   }
@@ -19,7 +20,7 @@ Tree.ratio.back = function(p, tree.ratio, taxa.index, otutab, group=c(1:(2*N))){
       ratio_sum <- log(otutab[, difset] + 1e-20) - log(rowSums(otutab[, nondifset]) + 1e-20)
     }
     difset_sumpv <-  apply(as.matrix(ratio_sum), 2, function(x)
-      return(ifelse(length(unique(x)) == 1, 1, t.test(x[group==1], x[group==2])$p.value)))
+      return(ifelse(length(unique(x)) == 1, 1, t.test(x[group==label], x[group!=label])$p.value)))
 
     difset_sumpv.adj <- p.adjust(difset_sumpv, method = "fdr", n = length(difset_sumpv))
     difset.detected <- names(which(difset_sumpv.adj <= 0.05))
