@@ -39,9 +39,10 @@ library(MiSPU)
 data(throat.otu.tab)
 data(throat.tree)
 data(throat.meta)
+data(throat.taxa.index )
 
 p <- ncol(throat.otu.tab)
-throat.taxa.index <- Taxa.index(p, throat.tree)
+# throat.taxa.index <- Taxa.index(p, throat.tree)
 colnames(throat.otu.tab) <- as.character(1:p)
 
 throat.alltab <- cbind(throat.taxa.index*throat.otu.tab,  throat.otu.tab)
