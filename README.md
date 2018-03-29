@@ -33,6 +33,7 @@ devtools::install_github("ZRChao/LRTT")
 ### Example
  
 #You can see this in real data application of throat.R 
+
 ```R
 library(MiSPU)
 data(throat.otu.tab)
@@ -41,9 +42,13 @@ data(throat.meta)
 
 p <- ncol(throat.otu.tab)
 throat.taxa.index <- Taxa.index(p, throat.tree)
-throat.alltab <- cbind(throat.taxa.index*throat.otu.tab,  throat.otu.tab)
-group <- throat.meta$SmokingState)
+colnames(throat.otu.tab) <- as.character(1:p)
 
-result <- Tree.Ratio(p, throat.tree, throat.taxa.index, throat.alltab, group)
-throat.detected <- Tree.Ratio.back(p, throat.tree, throat.taxa.index, results, group)
+throat.alltab <- cbind(throat.taxa.index*throat.otu.tab,  throat.otu.tab)
+group <- throat.meta$SmokingStatus
+
+
+result <- Tree.ratio(p, throat.tree, throat.taxa.index, throat.alltab, group)
+
+throat.detected <- Tree.ratio.back(p, throat.tree, throat.taxa.index, results, group)
 ```
