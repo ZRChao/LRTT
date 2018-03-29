@@ -22,20 +22,20 @@ threshold <- 0.1
 otu.number <- ncol(throat.otu.tab)
 is.binary.tree(throat.tree)
 colnames(throat.otu.tab) <- as.character(1:otu.number)
-throat.group <- which(throat.meta[,3] == "Smoker")
+throat.group <- throat.meta$SmokingStatus
 
 
 ###-------------------- t.test of the relative otu.table data for differential depth---------------###
 throat.log.rel.data = log((throat.otu.tab + 1e-20)/rowSums(throat.otu.tab + 1e-20))
 throat.t.rel.pvalue <- apply(throat.log.rel.data, 2, function(x)
-  return(ifelse(length(unique(x)) == 1, 1, t.test(x[throat.group], x[-throat.group])$p.value)))
+  return(ifelse(length(unique(x)) == 1, 1, t.test(x[throat.group == "NonSmoker"], x[throat.group == "Smoker"])$p.value)))
 throat.t.rel.pvalue.adj <- p.adjust(throat.t.rel.pvalue, method = "fdr", n = otu.number)
 throat.t.rel.detected <-  names(which(throat.t.rel.pvalue.adj <= threshold))
 
 
 ###-------------------------- ZIG which is use the quantile normalization -------------------------###
 rownames(throat.otu.tab) <- as.character(1:nrow(throat.otu.tab))
-throat.zig.group <- AnnotatedDataFrame(data.frame(throat.meta$SmokingStatus))
+throat.zig.group <- AnnotatedDataFrame(data.frame(throat.group))
 throat.zig.otu.tab <- newMRexperiment(t(throat.otu.tab), phenoData = throat.zig.group)
 throat.zig.otu.norm <- cumNorm(throat.zig.otu.tab, p = cumNormStatFast(throat.zig.otu.tab))
 throat.zig.model <- model.matrix(~ 1 + throat.meta$SmokingStatus,
@@ -52,7 +52,7 @@ throat.zig.detected <- rownames(throat.zig.result[which(throat.zig.result[, 4] <
 ## Reference :1) https://www.niehs.nih.gov/research/resources/software/biostatistics/ancom/index.cfm
 ##            2) https://github.com/alk224/akutils-v1.2/blob/master/akutils_resources/R-instructions_ancom.r
 start = Sys.time()
-throat.ancom.otu.tab <- cbind(throat.otu.tab, throat.meta$SmokingStatus)
+throat.ancom.otu.tab <- cbind(throat.otu.tab, throat.group)
 throat.ancom.result <- ANCOM(throat.ancom.otu.tab, sig = 0.05, multcorr = 2)
 Sys.time() - start
 throat.ancom.detected <- throat.ancom.result$detected
@@ -69,16 +69,15 @@ throat.ancom.py.delected <- which(throat.ancom.py.result[, 3] == "True")
 
 
 ###---------------------------- Tree Ratio test with correction ----------------------------------###
-throat.taxa.index <- Taxa_index(p = otu.number, phy_tree = throat.tree)
+throat.taxa.index <- Taxa.index(p = otu.number, phy_tree = throat.tree)
 throat.taxa.table <- as.matrix(throat.otu.tab)%*%throat.taxa.index
 throat.all.table <- cbind(as.matrix(throat.otu.tab), throat.taxa.table)
 throat.tree.ratio <- Tree_ratio(p = otu.number, tree = throat.tree, all_table = throat.all.table,
                                group = throat.group, taxa_index = throat.taxa.index)
 throat.taxa.diff <- throat.tree.ratio$taxa.dif
-throat.tree.back <- Tree_ratio_back(p = otu.number, tree_ratio = throat.tree.ratio,
+throat.tree.back <- Tree.ratio.back(p = otu.number, tree_ratio = throat.tree.ratio,
                                    otutab = throat.otu.tab, group = throat.group)
-throat.tree.back.adj <- p.adjust(throat.tree.back, method = "fdr", n = length(throat.tree.back))
-throat.tree.ratio.detected <- names(which(throat.tree.back.adj < 0.1))
+throat.tree.ratio.detected <- throat.tree.back
 
 
 ###------------finally we can get the differential OTU detected by this methods--------------------###
