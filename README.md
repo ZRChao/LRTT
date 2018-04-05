@@ -1,4 +1,4 @@
-## Log Raio Tree Test
+## Log Ratio Tree Test
 Differential Abundance Analysis for Microbiome data Incorporating Phylogeny. We call this methods *LRTT*（ Log Ratio Tree Test）.
 
 ## Installation
