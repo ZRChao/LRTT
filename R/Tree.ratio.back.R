@@ -5,7 +5,7 @@ Tree.ratio.back = function(p, tree.ratio, taxa.index=NULL, otutab=NULL, group=NU
   
   label <- unique(group)[1]
   otudif_TF <- tree.ratio$otu.dif
-  out_pvalue <- tree.ratio$otu.pvalue
+  otu_pvalue <- tree.ratio$otu.pvalue
   
   difset <- which(tree.ratio$otu.dif == T)
   
