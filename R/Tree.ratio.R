@@ -58,7 +58,7 @@ Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
       }
       else{
         all.tab[, which(colnames(all.tab) == parent)] <- child1 + child2
-        otu_pvalue[childs[otu_pvalue[childs]==1]] <- pv*tj
+        otu_pvalue[childs[otu_pvalue[childs]==1]] <- max(1, pv*tj)
       }
     }
   }
