@@ -11,14 +11,16 @@
 Tree.ratio = function(p, tree, taxa.index, all.tab, group){
   result <- list()
   taxa_pv <- rep(0, ncol(taxa.index))
-  names(taxa_pv) < names(sort(colSums(taxa.index)))
+  names(taxa_pv) <- names(sort(colSums(taxa.index)))
 
   otu_dif <- rep(F, p)
   otu_pvalue <- rep(0, p)
   names(otu_dif) <- as.character(1:p)
+  names(otu_pvalue)<-as.character(1:p)
+
   taxa_leafs <- unique(sort(colSums(taxa.index)))
   label <- unique(group)[1]
-  
+  taxa.pvname <- c()
   taxa.dif <- c()
   n = 0
   for(t in taxa_leafs){
@@ -26,8 +28,8 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group){
     for(j in 1:length(taxa_names)){
       n <- n + 1
       parent <- taxa_names[j]
+      taxa.pvname[n] <- parent
       childs <- tree$edge[which(tree$edge[, 1] == parent), 2]
-
       child1 <- all.tab[, colnames(all.tab) == as.character(childs[1])]
       child2 <- all.tab[, colnames(all.tab) == as.character(childs[2])]
 
@@ -53,6 +55,7 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group){
       }
     }
   }
+  # names(taxa_pv)<-taxa.pvname
   result$taxa.pvalue <- taxa_pv
   result$otu.dif <- otu_dif
   result$otu.pvalue <- otu_pvalue
