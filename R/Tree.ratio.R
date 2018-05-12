@@ -8,8 +8,10 @@
 #-----------------------------------------------------------------------#####
 
 
-Tree.ratio = function(p, tree, taxa.index, all.tab, group){
+Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
   result <- list()
+  if(is.null(taxa.index)) taxa.index <- Taxa.index(p, tree)
+  
   taxa_pv <- rep(0, ncol(taxa.index))
   names(taxa_pv) <- names(sort(colSums(taxa.index)))
 
@@ -59,9 +61,10 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group){
   result$taxa.pvalue <- taxa_pv
   result$otu.dif <- otu_dif
   result$otu.pvalue <- otu_pvalue
+  result$taxa.dif <- taxa.dif
   result$alltab <- all.tab
   result$group <- group
-  result$taxa.dif <- taxa.dif
+  result$taxa.index<-taxa.index
   return(result)
 }
 
