@@ -16,21 +16,21 @@ Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
   names(taxa_pv) <- names(sort(colSums(taxa.index)))
 
   otu_dif <- rep(F, p)
-  otu_pvalue <- rep(0, p)
-  names(otu_dif) <- as.character(1:p)
-  names(otu_pvalue)<-as.character(1:p)
+  otu_pvalue <- rep(1, p)
+  names(otu_dif) <- names(otu_pvalue)<-as.character(1:p)
 
   taxa_leafs <- unique(sort(colSums(taxa.index)))
   label <- unique(group)[1]
-  taxa.pvname <- c()
+  
   taxa.dif <- c()
   n = 0
   for(t in taxa_leafs){
     taxa_names <- names(which(colSums(taxa.index) == t))
-    for(j in 1:length(taxa_names)){
+    tj <- length(taxa_names)
+    for(j in 1:tj){
       n <- n + 1
       parent <- taxa_names[j]
-      taxa.pvname[n] <- parent
+    
       childs <- tree$edge[which(tree$edge[, 1] == parent), 2]
       child1 <- all.tab[, colnames(all.tab) == as.character(childs[1])]
       child2 <- all.tab[, colnames(all.tab) == as.character(childs[2])]
@@ -39,12 +39,16 @@ Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
       taxa_pv[n] <- pv <- ifelse(length(unique(ratio)) == 1, 1,
                                  t.test(ratio[group==label], ratio[group!=label])$p.value)
       childs <- which(taxa.index[, colnames(taxa.index) == parent] == 1)
-      otu_pvalue[childs] <- pv*length(taxa_names)
-      if(pv <= 0.05/length(taxa_names)){
+      
+      if(pv <= 0.05/tj){
         #temp = all_table[, colnames(all_table) == parent]
         all.tab[, colnames(all.tab) == parent] <- 1
         taxa.dif <- append(taxa.dif, parent)
-
+        if(length(childs)==2){
+          otu_pvalue[childs] <- pv*tj
+        }else{
+          otu_pvalue[childs[otu_pvalue[childs]>0.05]] <- pv*tj
+        }
         if(t != p){
           otu_dif[childs] <- T
         }
@@ -54,10 +58,12 @@ Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
       }
       else{
         all.tab[, which(colnames(all.tab) == parent)] <- child1 + child2
+        otu_pvalue[childs[otu_pvalue[childs]==1]] <- pv*tj
       }
     }
   }
   # names(taxa_pv)<-taxa.pvname
+  otu_pvalue[]
   result$taxa.pvalue <- taxa_pv
   result$otu.dif <- otu_dif
   result$otu.pvalue <- otu_pvalue
