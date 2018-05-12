@@ -60,6 +60,7 @@ Tree.ratio = function(p, tree, taxa.index, all.tab, group){
   result$otu.dif <- otu_dif
   result$otu.pvalue <- otu_pvalue
   result$alltab <- all.tab
+  result$group <- group
   result$taxa.dif <- taxa.dif
   return(result)
 }
