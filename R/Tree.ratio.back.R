@@ -1,4 +1,8 @@
-Tree.ratio.back = function(p, tree.ratio, taxa.index, otutab, group=c(1:(2*N))){
+Tree.ratio.back = function(p, tree.ratio, taxa.index=NULL, otutab=NULL, group=NULL){
+  if(is.null(group))  group <- tree.ratio$group
+  if(is.null(otutab)) otutab <-tree.ratio$alltab[, which(as.numeric(colnames(tree.results$alltab))<=p)]
+  if(is.null(taxa.index)) taxa.index <- tree.ratio$taxa.index
+  
   label <- unique(group)[1]
   otudif_TF <- tree.ratio$otu.dif
   out_pvalue <- tree.ratio$otu.pvalue
