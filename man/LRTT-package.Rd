@@ -57,11 +57,11 @@ p <- ncol(throat.otu.tab)
 # throat.taxa.index <- Taxa.index(p, throat.tree)
 data(throat.taxa.index )
 colnames(throat.otu.tab) <- as.character(1:p)
-throat.taxa.tab <- throat.otu.tab \%*\% throat.taxa.index
+throat.taxa.tab <- as.matrix(throat.otu.tab） \%*\% throat.taxa.index
 throat.alltab <- cbind(throat.taxa.tab,  throat.otu.tab)
 group <- throat.meta$SmokingStatus
 
 result <- Tree.ratio(p, throat.tree, throat.taxa.index, throat.alltab, group)
 
-throat.detected <- Tree.ratio.back(p, throat.tree, throat.taxa.index, results, group)
+throat.detected <- Tree.ratio.back(p, result)
 }
