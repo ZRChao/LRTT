@@ -1,7 +1,8 @@
-Tree.ratio.back = function(p, tree.ratio, taxa.index=NULL, otutab=NULL, group=NULL){
-  if(is.null(group))  group <- tree.ratio$group
-  if(is.null(otutab)) otutab <-tree.ratio$alltab[, which(as.numeric(colnames(tree.results$alltab))<=p)]
-  if(is.null(taxa.index)) taxa.index <- tree.ratio$taxa.index
+Tree.ratio.back = function(tree.ratio){
+  p <- length(tree.ratio$otu.dif)
+  group <- tree.ratio$group
+  otutab <-tree.ratio$alltab[, which(as.numeric(colnames(tree.ratio$alltab))<=p)]
+  taxa.index <- tree.ratio$taxa.index
   
   label <- unique(group)[1]
   otudif_TF <- tree.ratio$otu.dif
@@ -34,7 +35,7 @@ Tree.ratio.back = function(p, tree.ratio, taxa.index=NULL, otutab=NULL, group=NU
     difset.detected <- names(which(difset_sumpv.adj <= 0.05))
   }
   otudif_TF[as.numeric(difset.detected)] <- T 
-  otudif_TF[-as.numeric(difset.detected)]<- F                         
+  otudif_TF[!as.numeric(difset.detected)]<- F                         
   res <- data.frame(OTU=1:p, adj.pvalue=otu_pvalue, Differential=otudif_TF)                         
   return(res)
 }
