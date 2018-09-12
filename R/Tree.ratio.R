@@ -36,16 +36,16 @@ Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
       child2 <- all.tab[, colnames(all.tab) == as.character(childs[2])]
 
       ratio = log(child1 + 1e-20) - log(child2 + 1e-20)
-      taxa_pv[n] <- pv <- ifelse(length(unique(ratio)) == 1, 1,
+      pv <- ifelse(length(unique(ratio)) == 1, 1,
                                  t.test(ratio[group==label], ratio[group!=label])$p.value)
       childs <- which(taxa.index[, colnames(taxa.index) == parent] == 1)
-      
+      taxa_pv[n] <- pv/tj
       if(pv <= 0.05/tj){
         #temp = all_table[, colnames(all_table) == parent]
         all.tab[, colnames(all.tab) == parent] <- 1
         taxa.dif <- append(taxa.dif, parent)
         if(length(childs)==2){
-          otu_pvalue[childs] <- pv*tj
+          otu_pvalue[childs] <- min(1, pv*tj)
         }else{
           otu_pvalue[childs[otu_pvalue[childs]>0.05]] <- pv*tj
         }
@@ -58,12 +58,12 @@ Tree.ratio = function(p, tree, taxa.index=NULL, all.tab, group){
       }
       else{
         all.tab[, which(colnames(all.tab) == parent)] <- child1 + child2
-        otu_pvalue[childs[otu_pvalue[childs]==1]] <- max(1, pv*tj)
+        otu_pvalue[childs[otu_pvalue[childs]==1]] <- min(1, pv*tj)
       }
     }
   }
   # names(taxa_pv)<-taxa.pvname
-  otu_pvalue[]
+  #otu_pvalue[]
   result$taxa.pvalue <- taxa_pv
   result$otu.dif <- otu_dif
   result$otu.pvalue <- otu_pvalue
