@@ -4,14 +4,10 @@
 \alias{Tree.ratio.back}
 \title{correct step for tree ratio test}
 \usage{
-Tree.ratio.back(p, tree.ratio, taxa.index, otutab, group = c(1:N))
+Tree.ratio.back(tree.ratio)
 }
 \arguments{
-  \item{p}{OTU number}
   \item{tree.ratio}{results return by Tree.ratio function}
-  \item{taxa.index}{results return by Taxa.index function}
-  \item{otutab}{OTU table}
-  \item{group}{group label}
 }
 \value{
    The differential OTU detected
