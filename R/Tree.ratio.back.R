@@ -34,8 +34,14 @@ Tree.ratio.back = function(tree.ratio){
     otu_pvalue[difset] <- difset_sumpv.adj                       
     difset.detected <- names(which(difset_sumpv.adj <= 0.05))
   }
-  otudif_TF[as.numeric(difset.detected)] <- T 
-  otudif_TF[!as.numeric(difset.detected)]<- F                         
+  if(length(difset.detected) !=0) {
+     otudif_TF[as.numeric(difset.detected)] <- T ;
+      otudif_TF[!as.numeric(difset.detected)]<- F  
+   }
+   else{
+     otudif_TF[1:p] <- F
+   }
+   
   res <- data.frame(OTU=1:p, adj.pvalue=otu_pvalue, Differential=otudif_TF)                         
   return(res)
 }
